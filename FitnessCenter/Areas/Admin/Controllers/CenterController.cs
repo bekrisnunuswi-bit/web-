@@ -4,6 +4,7 @@ using FitnessCenter.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+/* onemli folder*/
 namespace FitnessCenter.Areas.Admin.Controllers
 {
     [Area(StaticDetails.Role_Admin)]
