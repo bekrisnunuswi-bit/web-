@@ -1,0 +1,411 @@
+﻿@using System.Globalization
+@model HomeViewModel
+
+@{
+    ViewData["Title"] = "IronCore Fitness Center | Gücünle Buluş";
+}
+
+<!-- Hero Section -->
+    <section class="hero-section text-center text-white d-flex align-items-center justify-content-center" 
+         style="min-height: 100vh; background: linear-gradient(135deg, #1a1a1a 0%, #343a40 100%); position: relative;">
+        <div class="container py-5 my-5">
+            <!-- Logo/Brand -->
+            <div class="mb-4 animate__animated animate__fadeIn">
+                <i class="fas fa-dumbbell fa-4x text-warning mb-4"></i>
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="display-1 fw-bolder text-uppercase mb-4 animate__animated animate__fadeInDown" 
+                style="letter-spacing: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                IRONCORE FITNESS
+            </h1>
+
+            <!-- Tagline -->
+            <p class="display-6 fw-bold text-warning mb-4 animate__animated animate__fadeInUp" 
+               style="letter-spacing: 3px;">
+                GÜCÜNLE BULUŞ
+            </p>
+
+            <!-- Description -->
+            <p class="lead mb-5 text-secondary fw-semibold mx-auto animate__animated animate__fadeInUp" 
+               style="max-width: 800px; font-size: 1.1rem;">
+                @Model.CenterDetails.Description
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="d-flex flex-column flex-md-row gap-3 justify-content-center mb-5 animate__animated animate__fadeInUp animate__delay-1s">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                <a asp-area="Identity" asp-page="/Account/Register"
+                   class="btn btn-warning btn-lg px-5 py-3 text-uppercase fw-bold"
+                   style="letter-spacing: 2px;">
+                    <i class="fas fa-user-plus me-2"></i>Ücretsiz Kaydol
+                </a>
+                <a asp-area="User" asp-controller="Service" asp-action="Index"
+                   class="btn btn-outline-light btn-lg px-5 py-3 text-uppercase fw-bold smooth-scroll"
+                   style="letter-spacing: 2px;">
+                    <i class="fas fa-info-circle me-2"></i>Detayları Keşfet
+                </a>
+                }
+            </div>
+
+            <!-- Stats -->
+            <div class="row g-4 mt-5 animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="col-md-4">
+                    <div class="stat-box p-4">
+                        <h2 class="display-4 fw-bold text-warning mb-2">1000+</h2>
+                        <p class="text-uppercase text-secondary fw-semibold" style="letter-spacing: 2px;">Mutlu Üye</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-box p-4">
+                        <h2 class="display-4 fw-bold text-warning mb-2">50+</h2>
+                        <p class="text-uppercase text-secondary fw-semibold" style="letter-spacing: 2px;">Uzman Eğitmen</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-box p-4">
+                        <h2 class="display-4 fw-bold text-warning mb-2">24/7</h2>
+                        <p class="text-uppercase text-secondary fw-semibold" style="letter-spacing: 2px;">Açık Hizmet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Down Indicator -->
+            <div class="scroll-indicator position-absolute bottom-0 start-50 translate-middle-x mb-4 animate__animated animate__bounce animate__infinite">
+                <a href="#details" class="text-warning text-decoration-none smooth-scroll">
+                    <i class="fas fa-chevron-down fa-2x"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+<!-- Details Section -->
+    <section id="details" class="details-section py-5 bg-light">
+        <div class="container py-5">
+            <!-- Section Header -->
+            <div class="text-center mb-5">
+                <h2 class="display-3 fw-bold text-uppercase mb-3" style="letter-spacing: 4px;">
+                    NEDEN IRONCORE?
+                </h2>
+                <p class="lead text-muted fw-semibold">Size özel fitness deneyimi sunuyoruz</p>
+                <div class="divider mx-auto my-4" style="width: 100px; height: 4px; background-color: #f0ad4e;"></div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 h-100 bg-white shadow-sm border-0 rounded">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-users fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="text-uppercase fw-bold mb-3" style="letter-spacing: 2px;">Uzman Kadro</h4>
+                        <p class="text-muted">Sertifikalı ve deneyimli eğitmenlerimizle hedeflerinize ulaşın</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 h-100 bg-white shadow-sm border-0 rounded">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-dumbbell fa-3x text-success"></i>
+                        </div>
+                        <h4 class="text-uppercase fw-bold mb-3" style="letter-spacing: 2px;">Modern Ekipman</h4>
+                        <p class="text-muted">Son teknoloji fitness ekipmanları ile optimal antrenman</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 h-100 bg-white shadow-sm border-0 rounded">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-brain fa-3x text-info"></i>
+                        </div>
+                        <h4 class="text-uppercase fw-bold mb-3" style="letter-spacing: 2px;">AI Destekli</h4>
+                        <p class="text-muted">Yapay zeka ile kişiselleştirilmiş antrenman ve beslenme planları</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card text-center p-4 h-100 bg-white shadow-sm border-0 rounded">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-clock fa-3x text-warning"></i>
+                        </div>
+                        <h4 class="text-uppercase fw-bold mb-3" style="letter-spacing: 2px;">Esnek Saatler</h4>
+                        <p class="text-muted">7/24 açık salon ile istediğiniz zaman antrenman yapın</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="services-section" class="services-section py-5">
+        <!-- Services Section -->
+        <div class="services-preview mt-5">
+            <div class="text-center mb-5">
+                <h3 class="display-4 fw-bold text-uppercase mb-3" style="letter-spacing: 3px;">
+                    HİZMETLERİMİZ
+                </h3>
+                <p class="lead text-muted fw-semibold">Size uygun programı seçin ve başlayın</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            @foreach (var service in Model.Services.Where(s => s.IsActive).OrderBy(s => s.Id))
+            {
+                // UI Renk ve İkon sınıfı atamaları (Bu veriler genellikle modelde olmaz, o yüzden switch kullanılır)
+                var iconClass = service.Id switch
+                {
+                    1 => "fa-dumbbell",
+                    2 => "fa-fire-flame-curved",
+                    3 => "fa-weight-hanging",
+                    4 => "fa-hand-fist",
+                    5 => "fa-spa",
+                    6 => "fa-person-walking",
+                    7 => "fa-bed",
+                    _ => "fa-dumbbell"
+                };
+
+                var cardColor = service.Id switch
+                {
+                    1 => "primary",
+                    2 => "danger",
+                    3 => "success",
+                    4 => "dark",
+                    5 => "info",
+					6 => "teal",
+					7 => "orange",
+                    _ => "primary"
+                };
+
+                <div class="col-md-12 mb-4">
+                    <div class="card service-card h-100 border-0 shadow">
+                        <div class="card-header bg-@cardColor text-white text-center py-4 border-0">
+                            <i class="fas @iconClass fa-3x mb-3 d-block"></i>
+                            <h3 class="h5 mb-0 fw-bold text-uppercase letter-spacing-3">@service.Name</h3>
+                        </div>
+
+                        <div class="card-body d-flex flex-column p-4">
+                            <p class="text-muted mb-4">@service.Description</p>
+
+                            <div class="service-details bg-light p-3 rounded mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span class="text-muted small text-uppercase"><i class="fas fa-clock text-warning me-2"></i>Süre</span>
+                                    <span class="fw-bold">@service.DurationMinutes dk</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span class="text-muted small text-uppercase"><i class="fas fa-users text-info me-2"></i>Kapasite</span>
+                                    <span class="fw-bold">@service.MaxCapacity kişi</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted small text-uppercase"><i class="fas fa-tag text-success me-2"></i>Ücret</span>
+                                    <span class="fw-bold text-success fs-5">@service.Fee.ToString("c", new CultureInfo("en-US"))</span>
+                                </div>
+                            </div>
+
+                            <div class="trainer-info mt-auto pt-3 border-top">
+                                <h6 class="text-muted mb-3 small text-uppercase letter-spacing-2">
+                                    <i class="fas fa-user-tie text-primary me-2"></i>EĞİTMENLER (@service.ServiceTrainers.Count)
+                                </h6>
+
+                                @if (service.ServiceTrainers.Any())
+                                {
+                                    @* Her bir atanan eğitmen için döngü yapılır *@
+                                    foreach (var link in service.ServiceTrainers)
+                                    {
+                                        // Trainer nesnesine ServiceTrainer linki üzerinden erişim
+                                        var trainer = link.Trainer;
+
+                                        <div class="trainer-details bg-light p-3 rounded mb-2">
+                                            <div class="d-flex align-items-start">
+                                                @if (!string.IsNullOrEmpty(trainer.ProfileImageUrl))
+                                                {
+                                                    <img src="@trainer.ProfileImageUrl"
+                                                         alt="@trainer.Name Profili"
+                                                         class="rounded-circle me-3 flex-shrink-0"
+                                                         style="width: 50px; height: 50px; object-fit: cover;border: 2px solid #ccc;" />
+                                                }
+                                                else
+                                                {
+                                                    <div class="trainer-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0"
+                                                         style="min-width: 50px; height: 50px; font-size: 1.25rem; font-weight: 600;">
+                                                        @trainer.Name.Substring(0, 1)
+                                                    </div>
+                                                }
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1 fw-bold text-uppercase">@trainer.Name</h6>
+                                                    <p class="text-primary mb-2 small fw-semibold">
+                                                        <i class="fas fa-star me-1"></i>@trainer.Specialty
+                                                    </p>
+                                                    <p class="text-muted mb-0 small">@trainer.Bio</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning small py-2 mb-0">Henüz atanmış eğitmen yok.</div>
+                                }
+                            </div>
+
+                            <div class="mt-4 d-grid gap-2">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                <a asp-area="User" asp-controller="Appointment" asp-action="Create" asp-route-id="@service.Id"
+                                       class="btn btn-@cardColor btn-sm text-uppercase fw-semibold">
+                                        <i class="fas fa-calendar-check me-2"></i>Rezervasyon Yap
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-area="Identity" asp-page="/Account/Login"
+                                       class="btn btn-@cardColor btn-sm text-uppercase fw-semibold">
+                                        <i class="fas fa-calendar-check me-2"></i>Rezervasyon Yap
+                                    </a>
+                                }
+                                    <a asp-area="User" asp-controller="Service" asp-action="Details" asp-route-id="@service.Id"
+                                       class="btn btn-outline-secondary btn-sm text-uppercase fw-semibold">
+                                        <i class="fas fa-info-circle me-1"></i>Detayları Gör
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- View All Services Button -->
+            <div class="text-center mt-5">
+                <a asp-area="User" asp-controller="Service" asp-action="Index"
+                   class="btn btn-primary btn-lg px-5 py-3 text-uppercase fw-bold" 
+                   style="letter-spacing: 2px;">
+                    <i class="fas fa-list me-2"></i>Tüm Hizmetleri Gör
+                </a>
+            </div>
+        </div>
+    </section>
+        <!-- Testimonials Section -->
+    <section class="testimonial-card py-5">
+        <div class="testimonials-section mt-5 pt-5">
+            <div class="text-center mb-5">
+                <h3 class="display-4 fw-bold text-uppercase mb-3" style="letter-spacing: 3px;">
+                    ÜYELERİMİZ NE DİYOR?
+                </h3>
+                <p class="lead text-muted fw-semibold">Başarı hikayelerini keşfedin</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card bg-white p-4 rounded shadow-sm h-100">
+                        <div class="mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="text-muted mb-3">"IronCore'da 3 ayda 15 kilo verdim! Eğitmenler çok profesyonel ve motive edici. Harika bir deneyim!"</p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                                 style="width: 50px; height: 50px; font-weight: 600;">
+                                AY
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Ayşe Yılmaz</h6>
+                                <small class="text-muted">Üye - 6 Ay</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="testimonial-card bg-white p-4 rounded shadow-sm h-100">
+                        <div class="mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="text-muted mb-3">"Modern ekipmanlar ve temiz ortam. AI destekli programlar gerçekten işe yarıyor. Kesinlikle tavsiye ederim!"</p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                                 style="width: 50px; height: 50px; font-weight: 600;">
+                                MK
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Mehmet Kaya</h6>
+                                <small class="text-muted">Üye - 1 Yıl</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="testimonial-card bg-white p-4 rounded shadow-sm h-100">
+                        <div class="mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="text-muted mb-3">"Yoga derslerini çok seviyorum. Eğitmen Ece Kaya gerçekten harika. Stresim azaldı, kendimi daha iyi hissediyorum."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                                 style="width: 50px; height: 50px; font-weight: 600;">
+                                ZA
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">Zeynep Arslan</h6>
+                                <small class="text-muted">Üye - 8 Ay</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="bg-dark text-white py-4">
+    <div class="container">
+        @if (Model.CenterDetails != null)
+        {
+            <div class="text-center">
+                <h3 class="fw-bold mb-3 text-warning">ÇALIŞMA SAATLERİ</h3>
+                <p class="lead fw-semibold mb-0">
+                    <i class="fas fa-clock me-2"></i>
+                    Açılış: @(Model.CenterDetails.OpeningTime.TotalHours > 0 ? Model.CenterDetails.OpeningTime.ToString() : "Bilinmiyor")
+                    <span class="mx-3">|</span>
+                    Kapanış: @(Model.CenterDetails.ClosingTime.TotalHours > 0 ? Model.CenterDetails.ClosingTime.ToString() : "Bilinmiyor")
+                </p>
+                <p class="small fw-semibold mb-0">Haftanın 7 Günü Hizmetinizdeyiz</p>
+            </div>
+        }
+        else
+        {
+            <p class="text-center text-muted">Çalışma saatleri bilgisi yüklenemedi.</p>
+        }
+    </div>
+</section>
+@* 
+    <section>
+    <!-- Final CTA -->
+    <div class="final-cta mt-5 pt-5">
+        <div class="cta-box bg-dark text-white p-5 rounded shadow-lg text-center">
+             details can be added 
+        </div>
+    </div>
+</section> 
+*@
+@section Scripts {
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+}

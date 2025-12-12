@@ -1,0 +1,125 @@
+﻿@using System.Globalization
+@model IEnumerable<Service>
+<div class="row g-4 py-5">
+    @foreach (var service in Model.Where(s => s.IsActive).OrderBy(s => s.Id))
+    {
+        var iconClass = service.Id switch
+        {
+            1 => "fa-dumbbell",
+            2 => "fa-fire-flame-curved",
+            3 => "fa-weight-hanging",
+            4 => "fa-hand-fist",
+            5 => "fa-spa",
+            6 => "fa-person-walking",
+            7 => "fa-bed",
+            _ => "fa-dumbbell"
+        };
+
+        var cardColor = service.Id switch
+        {
+            1 => "primary",
+            2 => "danger",
+            3 => "success",
+            4 => "dark",
+            5 => "info",
+            6 => "teal",
+            7 => "orange",
+            _ => "primary"
+        };
+
+        <div class="col-md-12 mb-4">
+            <div class="card service-card h-100 border-0 shadow">
+                <div class="card-header bg-@cardColor text-white text-center py-4 border-0">
+                    <i class="fas @iconClass fa-3x mb-3 d-block"></i>
+                    <h3 class="h5 mb-0 fw-bold text-uppercase letter-spacing-3">@service.Name</h3>
+                </div>
+
+                <div class="card-body d-flex flex-column p-4">
+                    <p class="text-muted mb-4">@service.Description</p>
+
+                    <div class="service-details bg-light p-3 rounded mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <span class="text-muted small text-uppercase"><i class="fas fa-clock text-warning me-2"></i>Süre</span>
+                            <span class="fw-bold">@service.DurationMinutes dk</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <span class="text-muted small text-uppercase"><i class="fas fa-users text-info me-2"></i>Kapasite</span>
+                            <span class="fw-bold">@service.MaxCapacity kişi</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted small text-uppercase"><i class="fas fa-tag text-success me-2"></i>Ücret</span>
+                            <span class="fw-bold text-success fs-5">@service.Fee.ToString("c", new CultureInfo("en-US"))</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-info mt-auto pt-3 border-top">
+                        <h6 class="text-muted mb-3 small text-uppercase letter-spacing-2">
+                            <i class="fas fa-user-tie text-primary me-2"></i>EĞİTMENLER (@service.ServiceTrainers.Count)
+                        </h6>
+
+                        @if (service.ServiceTrainers.Any())
+                        {
+                            @* Her bir atanan eğitmen için döngü yapılır *@
+                            foreach (var link in service.ServiceTrainers)
+                            {
+                                // Trainer nesnesine ServiceTrainer linki üzerinden erişim
+                                var trainer = link.Trainer;
+
+                                <div class="trainer-details bg-light p-3 rounded mb-2">
+                                    <div class="d-flex align-items-start">
+                                        @if (!string.IsNullOrEmpty(trainer.ProfileImageUrl))
+                                        {
+                                            <img src="@trainer.ProfileImageUrl"
+                                                 alt="@trainer.Name Profili"
+                                                 class="rounded-circle me-3 flex-shrink-0"
+                                                 style="width: 50px; height: 50px; object-fit: cover;border: 2px solid #ccc;" />
+                                        }
+                                        else
+                                        {
+                                            <div class="trainer-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0"
+                                                 style="min-width: 50px; height: 50px; font-size: 1.25rem; font-weight: 600;">
+                                                @trainer.Name.Substring(0, 1)
+                                            </div>
+                                        }
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 fw-bold text-uppercase">@trainer.Name</h6>
+                                            <p class="text-primary mb-2 small fw-semibold">
+                                                <i class="fas fa-star me-1"></i>@trainer.Specialty
+                                            </p>
+                                            <p class="text-muted mb-0 small">@trainer.Bio</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning small py-2 mb-0">Henüz atanmış eğitmen yok.</div>
+                        }
+                    </div>
+
+                    <div class="mt-4 d-grid gap-2">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-area="User" asp-controller="Appointment" asp-action="Create" asp-route-id="@service.Id"
+                               class="btn btn-@cardColor btn-sm text-uppercase fw-semibold">
+                                <i class="fas fa-calendar-check me-2"></i>Rezervasyon Yap
+							</a>
+						}
+                        else
+                        {
+                            <a asp-area="Identity" asp-page="/Account/Login"
+                               class="btn btn-@cardColor btn-sm text-uppercase fw-semibold">
+                                <i class="fas fa-calendar-check me-2"></i>Rezervasyon Yap
+                            </a>
+                        }
+                        <a asp-area="User" asp-controller="Service" asp-action="Details" asp-route-id="@service.Id"
+                           class="btn btn-outline-secondary btn-sm text-uppercase fw-semibold">
+                            <i class="fas fa-info-circle me-1"></i>Detayları Gör
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

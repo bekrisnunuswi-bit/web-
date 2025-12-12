@@ -1,0 +1,23 @@
+﻿// Areas/User/Views/Ai/Result.cshtml
+@model FitnessCenter.Models.BodyProfile
+@{
+    ViewData["Title"] = "AI Recommendation Result";
+}
+<h2>AI Recommendation</h2>
+
+@if (!string.IsNullOrEmpty(Model.ImageUrl))
+{
+    <div class="mb-3">
+        <img src="@Model.ImageUrl" alt="Uploaded" class="img-fluid" style="max-width:300px" />
+    </div>
+}
+
+<div class="mb-3">
+    <strong>Height:</strong> @Model.HeightCm cm<br />
+    <strong>Weight:</strong> @Model.WeightKg kg<br />
+    <strong>Body Type:</strong> @Model.BodyType
+</div>
+
+<pre style="white-space:pre-wrap; background:#f8f9fa; padding:1rem; border-radius:4px;">
+@Model.Recommendation
+</pre>

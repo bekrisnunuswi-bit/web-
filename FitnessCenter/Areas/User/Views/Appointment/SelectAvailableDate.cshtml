@@ -1,0 +1,96 @@
+﻿@model FitnessCenter.Models.ViewModels.AppointmentViewModel
+
+@{
+    ViewData["Title"] = Model.Service.Name + " - Adım 2";
+    string formattedDate = Model.AppointmentDate.HasValue ? Model.AppointmentDate.Value.ToString("yyyy-MM-dd") : "";
+    bool hasAvailableSlots = (Model.AvailableSlots != null && Model.AvailableSlots.Any());
+    // Eğitmen adını bulma
+    var trainerName = Model.TrainerList.FirstOrDefault(t => t.Value == Model.TrainerId.ToString())?.Text ?? "Belirtilmedi";
+}
+<section class="page-header text-center text-white py-5 mb-5"
+         style="background: linear-gradient(135deg, #1a1a1a 0%, #343a40 100%);">
+    <div class="container py-3">
+        <h1 class="display-5 fw-bold text-uppercase text-white">DENDEVU ONAYI</h1>
+    </div>
+</section>
+
+
+
+
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="p-4 border rounded shadow-lg bg-white h-100">
+                <div class="row">
+                    <p class="form-label col-4">Rendevu Bilgiler</p>
+                    <div class="col-8 alert alert-success pl-2 mb-4">
+                        <p class="mb-0 fw-bold">Eğitmen: @trainerName</p>
+                        <p class="mb-0 fw-bold">Tarih: @Model.AppointmentDate?.ToShortDateString()</p>
+                        <p class="mb-0 fw-bold">Süre: @Model.DurationMinutes dk</p>
+                    </div>
+                </div>
+                <form asp-action="SelectAvailableDate" method="post">
+                    <input type="hidden" asp-for="ServiceId" />
+                    <input type="hidden" asp-for="TrainerId" />
+                    <input type="hidden" asp-for="AppointmentDate" value="@formattedDate" /> 
+                    <input type="hidden" asp-for="DurationMinutes" />
+                    <input type="hidden" asp-for="Fee" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom">
+                        <label asp-for="StartTime" class="form-label">Müsait Saatler</label>
+                        @if (!hasAvailableSlots)
+                        {
+                            <select asp-for="StartTime" id="availableSlots" class="form-select" disabled>
+                                @{
+                                    // Hata/Bilgi mesajı için uygun olan mesajı seç
+                                    string message = (Model.TrainerId == 0 || !Model.AppointmentDate.HasValue)
+                                    ? "Önce Eğitmen ve Tarih Seçiniz"
+                                    : "Bu gün slot bulunamadı.";
+                                }
+                                <option value="">@message</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select asp-for="StartTime" id="availableSlots" class="form-select">
+                                <option value="">-- Saat Seçiniz --</option>
+                                @foreach (var slot in Model.AvailableSlots)
+                                {
+                                    <option value="@slot">@slot.ToString("hh\\:mm")</option>
+                                }
+                            </select>
+                        }
+                        <span asp-validation-for="StartTime" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mt-4 d-grid">
+                            <a asp-action="Create" asp-route-serviceId="@Model.ServiceId" class="btn bg-dark text-white btn-lg text-uppercase fw-semibold shadow-sm">
+                                <i class="fas fa-chevron-left"></i> Geri Dön
+                            </a>
+                        </div>
+                        <div class="col-md-6 mt-4 d-grid">
+                            @if (hasAvailableSlots)
+                            {
+                                <button type="submit" class="btn bg-success text-white btn-lg text-uppercase fw-semibold shadow-sm">
+                                    <i class="fas fa-check me-2"></i>Randevuyu Kaydet
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn bg-success text-white btn-lg text-uppercase fw-semibold shadow-sm" disabled>
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Müsait Saat Yok
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

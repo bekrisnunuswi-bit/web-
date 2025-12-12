@@ -1,0 +1,14 @@
+# Visual Studio ve .NET geçici dosyaları
+.vs/
+**/bin/
+**/obj/
+*.suo
+*.user
+*.log
+
+# Paketler
+packages/
+
+# Veritabanı dosyaları
+*.mdf
+*.ldf

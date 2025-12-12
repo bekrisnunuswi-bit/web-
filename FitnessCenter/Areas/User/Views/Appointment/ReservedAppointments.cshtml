@@ -1,0 +1,91 @@
+﻿@using System.Globalization
+@model IEnumerable<FitnessCenter.Models.Appointment>
+@{
+    ViewData["Title"] = "My Appointments";
+}
+<section class="container my-5 py-5">
+    <div class="card border-0 shadow mt-4">
+        <div class="card-header bg-white ml-0 py-3">
+            <div class="row">
+                <div class="col-6">
+                    <h2 class="text-primary py-2">My Appointments</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Tarih</th>
+                        <th scope="col">Saat</th>
+                        <th scope="col">Hizmet</th>
+                        <th scope="col">Eğitmen</th>
+                        <th scope="col">Ücret</th>
+                        <th scope="col">Durum</th>
+                        <th scope="col"></th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center">No appointments found</td>
+                        </tr>
+                    }
+                    @foreach (var appointment in Model.OrderByDescending(a => a.AppointmentDate).ThenBy(a => a.StartTime))
+                    {
+                        DateTime appointmentEndTime = appointment.AppointmentDate.Date.Add(appointment.EndTime);
+
+                        if (appointmentEndTime < DateTime.Now)
+                        {
+                            continue;
+                        }
+                        var statusClass = appointment.Status switch
+                        {
+                            AppointmentStatus.Confirmed => "bg-success",
+                            AppointmentStatus.Cancelled => "bg-danger",
+                            AppointmentStatus.Pending => "bg-warning text-dark",
+                            _ => "bg-secondary"
+                        };
+
+                        <tr>
+                            <td class="align-middle">@appointment.AppointmentDate.ToShortDateString()</td>
+
+                            <td class="align-middle fw-bold">
+                                @appointment.StartTime.ToString(@"hh\:mm") - @appointment.EndTime.ToString(@"hh\:mm")
+                            </td>
+
+                            <td class="align-middle">
+                                @(appointment.Service?.Name ?? "Hizmet Bilgisi Yok")
+                            </td>
+
+                            <td class="align-middle text-primary">
+                                @(appointment.Trainer?.Name ?? "Eğitmen Bilgisi Yok")
+                            </td>
+
+                            <td class="align-middle text-success">@appointment.Fee.ToString("c", new CultureInfo("en-US"))</td>
+
+                            <td class="align-middle">
+                                <span class="badge @statusClass text-uppercase">@appointment.Status</span>
+                            </td>
+
+                            <td class="align-middle text-end">
+                                @if (appointment.Status == AppointmentStatus.Pending)
+                                {
+                                    <a asp-action="Cancel" asp-route-id="@appointment.Id" class="btn btn-danger btn-sm mx-1 rounded">
+                                        <i class="bi bi-trash3-fill"></i> Cancel
+                                    </a>
+                                }
+                                @if (appointment.Status == AppointmentStatus.Confirmed)
+                                {
+                                    <span class="text-success small">Tamamlandı</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

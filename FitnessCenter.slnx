@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="FitnessCenter.DataAccess/FitnessCenter.DataAccess.csproj" Id="6008edbd-ff75-4182-b54b-cb742964a912" />
+  <Project Path="FitnessCenter.Models/FitnessCenter.Models.csproj" Id="faf6f4ad-d7e0-488a-b730-0dbb0fc19df7" />
+  <Project Path="FitnessCenter.Utility/FitnessCenter.Utility.csproj" Id="6610a103-e028-43e2-be67-6891189f4633" />
+  <Project Path="FitnessCenter/FitnessCenter.csproj" />
+</Solution>

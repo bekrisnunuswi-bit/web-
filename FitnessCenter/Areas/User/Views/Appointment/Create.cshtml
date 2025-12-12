@@ -1,0 +1,54 @@
+﻿@using System.Globalization
+@model FitnessCenter.Models.ViewModels.AppointmentViewModel
+
+@{
+    ViewData["Title"] = Model.Service.Name + " - Adım 1";
+    string formattedDate = Model.AppointmentDate.HasValue ? Model.AppointmentDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
+}
+<section class="page-header text-center text-white py-5 mb-5"
+         style="background: linear-gradient(135deg, #1a1a1a 0%, #343a40 100%);">
+    <div class="container py-3">
+        <h1 class="display-5 fw-bold text-uppercase text-white">@Model.Service.Name Randevusu</h1>
+        <p class="lead text-white-50">@Model.Service.Name | @Model.DurationMinutes dk. | @Model.Fee.ToString("c", new CultureInfo("en-US"))</p>
+    </div>
+</section>
+
+
+<section class="container my-5">
+    <div class="row">
+
+        <div class="col-lg-12 mb-4">
+            <div class="p-4 border rounded shadow-lg bg-white h-100">
+                <form asp-action="Create" method="post">
+                    <input type="hidden" asp-for="ServiceId" />
+                    <input type="hidden" asp-for="DurationMinutes" />
+                    <input type="hidden" asp-for="Fee" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom">
+                        <label asp-for="TrainerId" class="form-label">Eğitmen Seçiniz</label>
+                        <select asp-for="TrainerId" asp-items="@Model.TrainerList" class="form-select">
+                            <option value="">-- Eğitmen Seçiniz --</option>
+                        </select>
+                        <span asp-validation-for="TrainerId" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom">
+                        <label asp-for="AppointmentDate" class="form-label">Randevu Tarihi</label>
+                        <input asp-for="AppointmentDate" type="date" class="form-control" value="@formattedDate" min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mt-4 d-grid">
+                        <button type="submit" class="btn bg-dark text-white btn-lg text-uppercase fw-semibold shadow-sm"><i class="bi bi-clock-fill"></i> MUSAIT SAATLERI GOSTER</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

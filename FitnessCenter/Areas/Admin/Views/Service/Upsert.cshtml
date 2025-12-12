@@ -1,0 +1,117 @@
+﻿@model ServiceTrainerViewModel
+
+<div class="card border-0 shadow mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-primary py-2">@(Model.Service.Id == 0 ? "Add" : "Update") Service</h2>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body p-4">
+        <form class="row" asp-area="Admin" asp-controller="Service" asp-action="Upsert" method="post" enctype="multipart/form-data">
+            
+            <input asp-for="Service.Id" hidden />
+            @* <input asp-for="ImageUrl" hidden /> *@
+            
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="col-12 form-floating py-2">
+                            <input asp-for="Service.Name" class="shadow border-0 form-control" />
+                            <label asp-for="Service.Name" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="@Model.Service.Name" class="text-danger mt-1"></span>
+                        </div>
+                        
+                        <div class="col-12 form-floating py-2">
+                            <textarea asp-for="Service.Description" rows="3" class="shadow border-0 form-control" style="height: 100px;"></textarea>
+                            <label asp-for="Service.Description" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Service.Description" class="text-danger mt-1"></span>
+                        </div>
+                        
+                        <div class="col-12 form-floating py-2">
+                            <input asp-for="Service.DurationMinutes" class="shadow border-0 form-control" />
+                            <label asp-for="Service.DurationMinutes" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Service.DurationMinutes" class="text-danger mt-1"></span>
+                        </div>
+                        
+                        <div class="col-12 form-floating py-2">
+                            <input asp-for="Service.Fee" class="shadow border-0 form-control" />
+                            <label asp-for="Service.Fee" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Service.Fee" class="text-danger mt-1"></span>
+                        </div>
+                        
+                        <div class="col-12 form-floating py-2">
+                            <input asp-for="Service.MaxCapacity" class="shadow border-0 form-control" />
+                            <label asp-for="Service.MaxCapacity" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Service.MaxCapacity" class="text-danger mt-1"></span>
+                        </div>
+                        
+                        <div class="col-12 py-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" asp-for="Service.IsActive" />
+                                <label class="form-check-label" asp-for="Service.IsActive"></label>
+                            </div>
+                            <span asp-validation-for="Service.IsActive" class="text-danger mt-1"></span>
+                        </div>
+                        
+                        @* 
+                            <div class="col-12 form-floating py-2">
+                            <input type="file" name="file" class="shadow border-0 form-control" />
+                            <label class="form-label ms-2 mt-1">Hizmet Görseli Yükle</label>
+                            </div> 
+                        *@
+
+                        <div class="col-12 py-2">
+                            <label class="form-label mb-2 fw-bold text-primary">Select Trainers</label>
+
+                            <select asp-for="SelectedTrainerIds"
+                                    asp-items="@Model.Trainers" 
+                                    multiple
+                                    class="form-select shadow border-0"
+                                    style="height: 200px;">
+                            </select>
+    
+                            <span asp-validation-for="SelectedTrainerIds" class="text-danger mt-1"></span>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col-6 col-md-3">
+                                @if (Model.Service.Id == 0)
+                                {
+                                    <button type="submit" class="form-control btn btn-primary border">
+                                        <i class="bi bi-plus-square"></i> Oluştur
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="form-control btn btn-primary border">
+                                        <i class="bi bi-pencil-square"></i> Güncelle
+                                    </button>
+                                }
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-action="Index" class="form-control btn btn-outline-primary border">Listeye Geri Dön</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+				@*<div class="col-2 p-4">
+                     <img src="@Model.ImageUrl" width="100%" style="border-radius:5px;" /> 
+                    <div class="text-center py-5 border rounded bg-light text-muted">Görsel Önizleme</div>
+                </div>*@
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

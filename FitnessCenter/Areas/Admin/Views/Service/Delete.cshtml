@@ -1,0 +1,85 @@
+﻿@model Service
+
+@{
+    // Product Delete sayfasının stilini taklit ediyoruz
+    ViewData["Title"] = "Hizmet Silme Onayı";
+}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-danger py-2">Hizmet Silme Onayı</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-area="Admin" asp-controller="Service" asp-action="Delete" method="post" class="row">
+            <input asp-for="Id" hidden />
+
+            <div class="border p-3">
+
+                <!-- 1. Name -->
+                <div class="col-12 form-floating py-2">
+                    <input asp-for="Name" disabled class="shadow border-0 form-control" />
+                    <label asp-for="Name" class="form-label ms-2 mt-1"></label>
+                </div>
+
+                <!-- 2. Description (TextArea kullanıldı) -->
+                <div class="col-12 form-floating py-2">
+                    <textarea asp-for="Description" disabled rows="3" class="shadow border-0 form-control" style="height: 100px;"></textarea>
+                    <label asp-for="Description" class="form-label ms-2 mt-1"></label>
+                </div>
+
+                <!-- 3. DurationMinutes -->
+                <div class="col-12 form-floating py-2">
+                    <input asp-for="DurationMinutes" disabled class="shadow border-0 form-control" />
+                    <label asp-for="DurationMinutes" class="form-label ms-2 mt-1"></label>
+                </div>
+
+                <!-- 4. Fee (Ücret) -->
+                <div class="col-12 form-floating py-2">
+                    <input asp-for="Fee" disabled class="shadow border-0 form-control" />
+                    <label asp-for="Fee" class="form-label ms-2 mt-1"></label>
+                </div>
+
+                <!-- 5. MaxCapacity (Maksimum Kapasite) -->
+                <div class="col-12 form-floating py-2">
+                    <input asp-for="MaxCapacity" disabled class="shadow border-0 form-control" />
+                    <label asp-for="MaxCapacity" class="form-label ms-2 mt-1"></label>
+                </div>
+
+                <!-- 6. IsActive (Görünürlük) -->
+                <div class="col-12 py-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" asp-for="IsActive" disabled />
+                        <label class="form-check-label" asp-for="IsActive"></label>
+                    </div>
+                </div>
+
+                <!-- Butonlar -->
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        <!-- Silme butonu tehlike renginde olmalı -->
+                        <button class="btn btn-danger border form-control" type="submit">
+                            <i class="bi bi-trash3-fill"></i> Hizmeti Sil
+                        </button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <!-- İptal/Geri Dön butonu -->
+                        <a class="btn btn-outline-primary border form-control" asp-action="Index">Geri Dön</a>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        @* Silme sayfasında validasyon betiklerine genelde gerek yoktur, ancak tutarlılık için tutulabilir *@
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

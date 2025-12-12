@@ -1,0 +1,98 @@
+﻿@model ServiceTrainerViewModel
+
+<div class="card border-0 shadow mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-primary py-2">@(Model.Trainer.Id == 0 ? "Add" : "Update") Trainer</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <form class="row" asp-area="Admin" asp-controller="Trainer" asp-action="Upsert" method="post" enctype="multipart/form-data">
+
+            <input asp-for="Trainer.Id" hidden />
+            <input asp-for="Trainer.ProfileImageUrl" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="col-12 form-floating py-2">
+                            <input asp-for="Trainer.Name" class="shadow border-0 form-control" />
+                            <label asp-for="Trainer.Name" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Trainer.Name" class="text-danger mt-1"></span>
+                        </div>
+
+                        <div class="col-12 form-floating py-2">
+                            <input asp-for="Trainer.Specialty" class="shadow border-0 form-control" />
+                            <label asp-for="Trainer.Specialty" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Trainer.Specialty" class="text-danger mt-1"></span>
+                        </div>
+
+                        <div class="col-12 form-floating py-2">
+                            <textarea asp-for="Trainer.Bio" rows="3" class="shadow border-0 form-control" style="height: 100px;"></textarea>
+                            <label asp-for="Trainer.Bio" class="form-label ms-2 mt-1"></label>
+                            <span asp-validation-for="Trainer.Bio" class="text-danger mt-1"></span>
+                        </div>
+
+                        <div class="col-12 form-floating py-2">
+                            <input type="file" name="file" class="shadow border-0 form-control" />
+                            <label class="form-label ms-2 mt-1">Profil Resmi Yükle</label>
+                        </div>
+                        <div class="col-12 form-floating py-2">
+                            <label class="form-label mb-2 fw-bold text-primary">Select Services</label>
+
+                            <select asp-for="SelectedServiceIds"
+                                    asp-items="@Model.Services"
+                                    multiple
+                                    class="form-select shadow border-0"
+                                    style="height: 200px;">
+                            </select>
+                            <span asp-validation-for="SelectedTrainerIds" class="text-danger mt-1"></span>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-6 col-md-3">
+                                @if (Model.Trainer.Id == 0)
+                                {
+                                    <button type="submit" class="form-control btn btn-primary border">
+                                        <i class="bi bi-plus-square"></i> Oluştur
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="form-control btn btn-primary border">
+                                        <i class="bi bi-pencil-square"></i> Güncelle
+                                    </button>
+                                }
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-action="Index" class="form-control btn btn-outline-primary border">Listeye Geri Dön</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-2 p-4">
+                    @if (!string.IsNullOrEmpty(Model.Trainer.ProfileImageUrl))
+                    {
+                        <img src="@Model.Trainer.ProfileImageUrl" width="100%" style="border-radius:5px; object-fit: cover;" alt="Trainer Resmi" />
+                    }
+                    else
+                    {
+                        <div class="text-center py-5 border rounded bg-light text-muted">Resim Önizleme</div>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

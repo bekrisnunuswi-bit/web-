@@ -1,0 +1,82 @@
+﻿@model IEnumerable<FitnessCenter.Models.Trainer>
+
+@{
+    ViewData["Title"] = "Eğitmen Yönetimi";
+}
+
+<div class="card border-0 shadow mt-4">
+    <div class="card-header bg-white ml-0 py-3">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-primary py-2">TRAINERS</h2>
+            </div>
+            <div class="col-6 text-end">
+                <a asp-action="Upsert" class="btn btn-primary border form-control" style="width: auto;">
+                    <i class="bi bi-plus-square-fill"></i> Yeni Eğitmen Oluştur
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Specialty)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Bio)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ProfileImageUrl)</th>
+                    <th scope="col">Services</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle fw-bold">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="align-middle text-primary">@Html.DisplayFor(modelItem => item.Specialty)</td>
+                        <td class="align-middle text-muted small">
+                            @(item.Bio != null && item.Bio.Length > 80 ? item.Bio.Substring(0, 80) + "..." : item.Bio)
+                        </td>
+                        <td class="align-middle">
+                            @if (!string.IsNullOrEmpty(item.ProfileImageUrl))
+                            {
+                                <img src="@item.ProfileImageUrl" alt="Profil Resmi" style="width: 50px; height: 50px; object-fit: cover;" class="rounded-circle" />
+                            }
+                            else
+                            {
+                                <span class="text-secondary small"><i class="bi bi-person-circle"></i></span>
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @if (item.ServiceTrainers != null && item.ServiceTrainers.Any())
+                            {
+                                // Her bir eğitmen için döngü kurarak isimleri listele
+                                @foreach (var link in item.ServiceTrainers)
+                                {
+                                    // Trainer nesnesine ServiceTrainer linki üzerinden erişim
+                                    <span class="badge bg-secondary d-block text-start text-uppercase mb-1">@link.Service.Name</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="badge bg-light text-dark">Atanmadı</span>
+                            }
+                        </td>
+                        <td class="align-middle text-end">
+                            <div class="btn-group" role="group">
+                                <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-primary btn-sm mx-1 ">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm mx-1 ">
+                                    <i class="bi bi-trash3-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

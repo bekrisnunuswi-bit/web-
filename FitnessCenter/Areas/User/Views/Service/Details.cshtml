@@ -1,0 +1,86 @@
+﻿@using System.Globalization
+@model Service
+
+@{
+    ViewData["Title"] = Model.Name + " Detayları";
+    var accentColor = "warning"; 
+    var buttonBg = "bg-dark"; 
+}
+
+<section class="page-header text-center text-white py-5 mb-5"
+         style="background: linear-gradient(135deg, #1a1a1a 0%, #343a40 100%);">
+    <div class="container py-3">
+        <h1 class="display-5 fw-bold text-uppercase text-white">@Model.Name</h1>
+        <p class="lead text-white-50">@Model.Description</p>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="p-4 border rounded shadow-lg bg-white h-100">
+                <h2 class="h4 mb-4 text-uppercase fw-bold text-dark border-bottom pb-2">TEMEL BİLGİLER</h2>
+
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span class="text-muted"><i class="fas fa-clock text-@accentColor me-2"></i>Süre:</span>
+                    <span class="fw-bold">@Model.DurationMinutes dk</span>
+                </div>
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span class="text-muted"><i class="fas fa-users text-info me-2"></i>Maksimum Kapasite:</span>
+                    <span class="fw-bold">@Model.MaxCapacity kişi</span>
+                </div>
+                <div class="d-flex justify-content-between py-2">
+                    <span class="text-muted"><i class="fas fa-tag text-success me-2"></i>Ücret (Tek Seferlik):</span>
+                    <span class="fw-bold text-success fs-4">@Model.Fee.ToString("c", new CultureInfo("en-US"))</span>
+                </div>
+
+                <div class="mt-4 d-grid">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="User" asp-controller="Appointment" asp-action="Create" asp-route-id="@Model.Id"
+                           class="btn @buttonBg text-white btn-lg text-uppercase fw-semibold shadow-sm">
+                            <i class="fas fa-calendar-check me-2"></i>ŞİMDİ RANDEVU ALIN
+                        </a>
+					}
+					else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login"  
+                           class="btn @buttonBg text-white btn-lg text-uppercase fw-semibold shadow-sm">
+                            <i class="fas fa-calendar-check me-2"></i>ŞİMDİ RANDEVU ALIN
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <h2 class="h4 mb-4 text-uppercase fw-bold text-dark border-bottom pb-2">ATANMIŞ UZMAN EĞİTMENLER</h2>
+
+            @if (Model.ServiceTrainers.Any())
+            {
+                foreach (var link in Model.ServiceTrainers)
+                {
+                    var trainer = link.Trainer;
+                    <div class="card trainer-card mb-3 p-3 shadow-sm border-0">
+                        <div class="d-flex align-items-start">
+                            @* Avatar/Resim Kontrolü *@
+                            @* ... Trainer Resim/Avatar Kodu Buraya Gelir ... *@
+
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1 fw-bold text-uppercase">@trainer.Name</h5>
+                                <p class="text-primary mb-1 small fw-semibold">
+                                    <i class="fas fa-star me-1"></i>@trainer.Specialty
+                                </p>
+                                <p class="text-muted small mb-0">@trainer.Bio</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info">Bu hizmet için henüz bir eğitmen atanmamıştır.</div>
+            }
+        </div>
+    </div>
+</section>
