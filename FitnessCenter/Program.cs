@@ -58,6 +58,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Configure the HTTP request pipeline.
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
