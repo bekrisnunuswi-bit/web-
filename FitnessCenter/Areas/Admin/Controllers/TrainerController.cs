@@ -87,7 +87,7 @@ namespace FitnessCenter.Areas.Admin.Controllers
                     vm.Trainer.ProfileImageUrl = @"\images\Trainer\" + fileName;
                 }
                 if (vm.Trainer.Id == 0)
-                {
+                { //delete the old image
                     _unitOfWork.TrainerRepo.Add(vm.Trainer);
                     TempData["success"] = "Trainer created successfully";
                 }
