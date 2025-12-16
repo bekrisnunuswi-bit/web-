@@ -79,6 +79,8 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "Veri tohumlama veya migrasyon sırasında bir hata oluştu.");
     }
 }
+// Configure the HTTP request pipeline.
+
 app.MapStaticAssets();
 app.MapRazorPages();
 app.MapControllerRoute(
