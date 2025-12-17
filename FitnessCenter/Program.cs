@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Add services to the container.
  
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -31,6 +30,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
+
+// Add services to the container.
 
 builder.Services.ConfigureApplicationCookie(option =>
 {
@@ -81,6 +82,7 @@ using (var scope = app.Services.CreateScope())
 }
 // Configure the HTTP request pipeline.
 
+
 app.MapStaticAssets();
 app.MapRazorPages();
 app.MapControllerRoute(
@@ -88,4 +90,5 @@ app.MapControllerRoute(
     pattern: "{Area=User}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+// Configure the HTTP request pipeline.
 
