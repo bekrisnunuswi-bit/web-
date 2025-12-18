@@ -109,7 +109,7 @@ namespace FitnessCenter.Areas.Admin.Controllers
 
                 // 3. Yeni İlişkileri Kaydetme
                 if (vm.SelectedServiceIds != null && vm.SelectedServiceIds.Any())
-                {
+                {//delete the old image
                     foreach (var serviceId in vm.SelectedServiceIds)
                     {
                         var newLink = new ServiceTrainer
