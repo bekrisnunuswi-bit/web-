@@ -50,6 +50,7 @@ namespace FitnessCenter.Areas.Admin.Controllers
                 vm.SelectedServiceIds = vm.Trainer.ServiceTrainers.Select(st => st.ServiceId).ToList();
                 ViewData["Title"] = "Update Trainer";
             }
+            //Update
             vm.Services = _unitOfWork.ServiceRepo.GetAll()
                 .Select(t => new SelectListItem
                 {
